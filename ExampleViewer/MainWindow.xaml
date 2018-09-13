@@ -1,0 +1,44 @@
+﻿<Window x:Class="ExampleViewer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:hx="http://helix-toolkit.org/wpf/SharpDX"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ExampleViewer"
+        mc:Ignorable="d"
+        Title="Test Viewer" Height="450" Width="800">
+    <Grid Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <!-- Menu Strip -->
+        <Menu Grid.Row="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="14">
+            <MenuItem Header="File">
+                <MenuItem Header="Load File" Click="LoadFile"/>
+            </MenuItem>
+        </Menu>
+        
+        <!-- Viewport -->
+        <hx:Viewport3DX  x:Name="Viewport3Dx" Grid.Row="1" Grid.Column="0" FixedRotationPointEnabled="True" FixedRotationPoint="{Binding RotationPoint}" Background="SlateGray" BackgroundColor="SlateGray" ShowCoordinateSystem="True" EffectsManager="{Binding EffectsManager}" UseDefaultGestures="False">
+            
+            <!-- Mouse Controls-->
+            <hx:Viewport3DX.InputBindings>
+                <MouseBinding Gesture="RightClick" Command="hx:ViewportCommands.Rotate"/>
+                <MouseBinding Gesture="MiddleClick" Command="hx:ViewportCommands.Pan"/>
+                <MouseBinding Gesture="Shift+RightClick"  Command="hx:ViewportCommands.Zoom"/>
+            </hx:Viewport3DX.InputBindings>
+
+            <!-- Environment and Lighting -->
+            <hx:Viewport3DX.ModelUpDirection>
+                <Vector3D X="0" Y="0" Z="1"/>
+            </hx:Viewport3DX.ModelUpDirection>
+            <hx:DirectionalLight3D Color="White" Direction="1,1,0"/>
+            
+            <!-- Viewport Content-->
+            <hx:MeshGeometryModel3D Geometry="{Binding MeshModel}" Material="{Binding MeshMaterial}" WireframeColor="AliceBlue"/>
+        
+        </hx:Viewport3DX>
+    </Grid>
+</Window>
